@@ -24,19 +24,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Copy data in Gold Folder",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy data in Silver Folder",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Copy data in Bronze Folder",
+						"activity": "Data flow from blob storage to datalake",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,222 +44,12 @@
 				}
 			},
 			{
-				"name": "Copy data in Gold Folder",
-				"description": "Copy data from Blob Storage to Medal wise Folders in Azure Data Lake.",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set Start Time",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.00:12:00",
-					"retry": 3,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Usecase02Dataset",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Usecase02DatasetDatalake01",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "Copy data in Silver Folder",
-				"description": "Copy data from Blob Storage to Medal wise Folders in Azure Data Lake.",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set Start Time",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.00:12:00",
-					"retry": 3,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Usecase02Dataset",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Usecase02DatasetDatalake02",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "Copy data in Bronze Folder",
-				"description": "Copy data from Blob Storage to Medal wise Folders in Azure Data Lake.",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set Start Time",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.00:12:00",
-					"retry": 3,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Usecase02Dataset",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Usecase02DatasetDatalake03",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Fail status",
 				"description": "The Copy Activity is failed",
 				"type": "Fail",
 				"dependsOn": [
 					{
-						"activity": "Copy data in Gold Folder",
-						"dependencyConditions": [
-							"Failed"
-						]
-					},
-					{
-						"activity": "Copy data in Silver Folder",
-						"dependencyConditions": [
-							"Failed"
-						]
-					},
-					{
-						"activity": "Copy data in Bronze Folder",
+						"activity": "Data flow from blob storage to datalake",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -281,6 +59,38 @@
 				"typeProperties": {
 					"message": "The Copy Activity is failed",
 					"errorCode": "1"
+				}
+			},
+			{
+				"name": "Data flow from blob storage to datalake",
+				"description": "Load Data from 2016_Medals.csv in Azure Blob Storage to Medal wise Gold, Silver, Bronze Folders in Azure Data Lake.",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Set Start Time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.00:12:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflowUseCase02",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],

@@ -1,0 +1,91 @@
+{
+	"name": "dataflowUseCase02",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Usecase02Dataset",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Usecase02DatasetDatalake01",
+						"type": "DatasetReference"
+					},
+					"name": "sinkToGold"
+				},
+				{
+					"dataset": {
+						"referenceName": "Usecase02DatasetDatalake02",
+						"type": "DatasetReference"
+					},
+					"name": "sinkToSilver"
+				},
+				{
+					"dataset": {
+						"referenceName": "Usecase02DatasetDatalake03",
+						"type": "DatasetReference"
+					},
+					"name": "sinkToBronze"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          Age as string,",
+				"          {Height (cm)} as string,",
+				"          {Weight (kg)} as string,",
+				"          Team as string,",
+				"          NOC as string,",
+				"          Games as string,",
+				"          Year as string,",
+				"          Season as string,",
+				"          City as string,",
+				"          Sport as string,",
+				"          Event as string,",
+				"          Medal as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 split(Medal==\"Gold\",",
+				"     Medal==\"Silver\",",
+				"     disjoint: false) ~> split1@(GoldMedal, SilverMedal, BronzeMedal)",
+				"split1@GoldMedal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkToGold",
+				"split1@SilverMedal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkToSilver",
+				"split1@BronzeMedal sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkToBronze"
+			]
+		}
+	}
+}
