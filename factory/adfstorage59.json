@@ -1,0 +1,9 @@
+{
+	"name": "adfstorage59",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6b4b21ed-71aa-4440-828d-2807c58c6f4d",
+		"tenantId": "76a2ae5a-9f00-4f6b-95ed-5d33d77c4d61"
+	}
+}
