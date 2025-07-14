@@ -1,0 +1,52 @@
+{
+	"name": "usecase04dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageUseCase04",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "UseCase04"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Sales.csv",
+				"folderPath": "Sales",
+				"container": "usecase04input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SalesDate",
+				"type": "String"
+			},
+			{
+				"name": "SalesMan",
+				"type": "String"
+			},
+			{
+				"name": "Item",
+				"type": "String"
+			},
+			{
+				"name": "Units",
+				"type": "String"
+			},
+			{
+				"name": "Unit_price",
+				"type": "String"
+			},
+			{
+				"name": "Sale_amt",
+				"type": "String"
+			}
+		]
+	}
+}
