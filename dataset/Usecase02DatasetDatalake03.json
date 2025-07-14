@@ -1,0 +1,26 @@
+{
+	"name": "Usecase02DatasetDatalake03",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageUseCase02",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "UseCase02"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Bronze",
+				"fileSystem": "usecase02output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
