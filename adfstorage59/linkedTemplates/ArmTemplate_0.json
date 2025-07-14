@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase02'"
 		},
+		"AzureBlobStorageUseCase03_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase03'"
+		},
 		"AzureDataLakeStorageUseCase01_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageUseCase01'"
@@ -23,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageUseCase02'"
 		},
+		"AzureSqlDatabaseUseCase03_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseUseCase03'"
+		},
 		"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vaishnavidatalake56.dfs.core.windows.net/"
@@ -30,6 +38,18 @@
 		"AzureDataLakeStorageUseCase02_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vaishnavidatalake56.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabaseUseCase03_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vaishnavi-server.database.windows.net"
+		},
+		"AzureSqlDatabaseUseCase03_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vaishnavi-database"
+		},
+		"AzureSqlDatabaseUseCase03_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vaishnavi"
 		}
 	},
 	"variables": {
@@ -116,6 +136,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorageUseCase03')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorageUseCase03_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorageUseCase01')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -148,6 +181,79 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseUseCase03')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabaseUseCase03_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabaseUseCase03_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabaseUseCase03_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabaseUseCase03_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabaseUseCase03",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "UseCase03"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "EmployeeName",
+						"type": "varchar"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Designation",
+						"type": "varchar"
+					},
+					{
+						"name": "Salary",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "EmployeeDetails"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseUseCase03')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/UseCase01Dataset')]",
@@ -382,6 +488,62 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageUseCase02')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/usecase03dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorageUseCase03",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "UseCase03"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Employee_Details.csv",
+						"container": "usecase03input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "EmployeeID",
+						"type": "String"
+					},
+					{
+						"name": "EmployeeName",
+						"type": "String"
+					},
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Designation",
+						"type": "String"
+					},
+					{
+						"name": "Salary",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageUseCase03')]"
 			]
 		},
 		{
@@ -829,6 +991,147 @@
 				"[concat(variables('factoryId'), '/datasets/Usecase02DatasetDatalake01')]",
 				"[concat(variables('factoryId'), '/datasets/Usecase02DatasetDatalake02')]",
 				"[concat(variables('factoryId'), '/datasets/Usecase02DatasetDatalake03')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_usecase03')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set Start Time",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": {
+								"value": "@utcNow()",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Set End Time",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Copy data from azure blob storage to database",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "status",
+							"value": {
+								"value": "@utcNow()",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Copy data from azure blob storage to database",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set Start Time",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.00:12:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "usecase03dataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Fail status",
+						"type": "Fail",
+						"dependsOn": [
+							{
+								"activity": "Copy data from azure blob storage to database",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"message": "The copy activity is failed",
+							"errorCode": "1"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"status": {
+						"type": "String"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/usecase03dataset')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		}
 	]
