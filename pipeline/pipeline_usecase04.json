@@ -45,6 +45,7 @@
 			},
 			{
 				"name": "Data flow1",
+				"description": "Load valid and invalid Sales records to Sales details and Sales details fail tables respectively from Azure Blob Storage to Azure DB.",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
