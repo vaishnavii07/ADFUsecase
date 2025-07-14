@@ -8,10 +8,19 @@
 		"AzureBlobStorageUseCase01_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStorageUseCase02_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorageUseCase01_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStorageUseCase02_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
+			"value": "https://vaishnavidatalake56.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorageUseCase02_properties_typeProperties_url": {
 			"value": "https://vaishnavidatalake56.dfs.core.windows.net/"
 		},
 		"containerUri": {

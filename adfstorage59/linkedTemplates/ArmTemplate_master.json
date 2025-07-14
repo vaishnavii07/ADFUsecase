@@ -11,11 +11,23 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase01'"
 		},
+		"AzureBlobStorageUseCase02_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase02'"
+		},
 		"AzureDataLakeStorageUseCase01_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageUseCase01'"
 		},
+		"AzureDataLakeStorageUseCase02_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageUseCase02'"
+		},
 		"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://vaishnavidatalake56.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorageUseCase02_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://vaishnavidatalake56.dfs.core.windows.net/"
 		},
@@ -49,11 +61,20 @@
 					"AzureBlobStorageUseCase01_connectionString": {
 						"value": "[parameters('AzureBlobStorageUseCase01_connectionString')]"
 					},
+					"AzureBlobStorageUseCase02_connectionString": {
+						"value": "[parameters('AzureBlobStorageUseCase02_connectionString')]"
+					},
 					"AzureDataLakeStorageUseCase01_accountKey": {
 						"value": "[parameters('AzureDataLakeStorageUseCase01_accountKey')]"
 					},
+					"AzureDataLakeStorageUseCase02_accountKey": {
+						"value": "[parameters('AzureDataLakeStorageUseCase02_accountKey')]"
+					},
 					"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageUseCase01_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorageUseCase02_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorageUseCase02_properties_typeProperties_url')]"
 					}
 				}
 			},
