@@ -96,6 +96,23 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Fail status",
+				"type": "Fail",
+				"dependsOn": [
+					{
+						"activity": "Copy data from blob storage to datalake storage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"message": "The Copy Activity is Failed",
+					"errorCode": "1"
+				}
 			}
 		],
 		"variables": {
