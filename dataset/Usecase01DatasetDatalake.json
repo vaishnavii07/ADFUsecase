@@ -1,0 +1,20 @@
+{
+	"name": "Usecase01DatasetDatalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageUseCase01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "UseCase01"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "usecase01output"
+			}
+		}
+	}
+}

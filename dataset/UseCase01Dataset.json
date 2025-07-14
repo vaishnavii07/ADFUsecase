@@ -1,0 +1,20 @@
+{
+	"name": "UseCase01Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageUseCase01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "UseCase01"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "usecase01input"
+			}
+		}
+	}
+}
