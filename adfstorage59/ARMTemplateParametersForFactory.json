@@ -14,6 +14,9 @@
 		"AzureBlobStorageUseCase03_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStorageUseCase04_connectionString": {
+			"value": ""
+		},
 		"AzureDataLakeStorageUseCase01_accountKey": {
 			"value": ""
 		},
@@ -21,6 +24,9 @@
 			"value": ""
 		},
 		"AzureSqlDatabaseUseCase03_password": {
+			"value": ""
+		},
+		"AzureSqlDatabaseUseCase04_password": {
 			"value": ""
 		},
 		"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
@@ -36,6 +42,15 @@
 			"value": "vaishnavi-database"
 		},
 		"AzureSqlDatabaseUseCase03_properties_typeProperties_userName": {
+			"value": "vaishnavi"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_server": {
+			"value": "vaishnavi-server.database.windows.net"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_database": {
+			"value": "vaishnavi-database"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_userName": {
 			"value": "vaishnavi"
 		}
 	}

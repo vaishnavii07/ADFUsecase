@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase03'"
 		},
+		"AzureBlobStorageUseCase04_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageUseCase04'"
+		},
 		"AzureDataLakeStorageUseCase01_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageUseCase01'"
@@ -30,6 +34,10 @@
 		"AzureSqlDatabaseUseCase03_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseUseCase03'"
+		},
+		"AzureSqlDatabaseUseCase04_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseUseCase04'"
 		},
 		"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
 			"type": "string",
@@ -48,6 +56,18 @@
 			"defaultValue": "vaishnavi-database"
 		},
 		"AzureSqlDatabaseUseCase03_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "vaishnavi"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "vaishnavi-server.database.windows.net"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vaishnavi-database"
+		},
+		"AzureSqlDatabaseUseCase04_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "vaishnavi"
 		},
@@ -87,6 +107,9 @@
 					"AzureBlobStorageUseCase03_connectionString": {
 						"value": "[parameters('AzureBlobStorageUseCase03_connectionString')]"
 					},
+					"AzureBlobStorageUseCase04_connectionString": {
+						"value": "[parameters('AzureBlobStorageUseCase04_connectionString')]"
+					},
 					"AzureDataLakeStorageUseCase01_accountKey": {
 						"value": "[parameters('AzureDataLakeStorageUseCase01_accountKey')]"
 					},
@@ -95,6 +118,9 @@
 					},
 					"AzureSqlDatabaseUseCase03_password": {
 						"value": "[parameters('AzureSqlDatabaseUseCase03_password')]"
+					},
+					"AzureSqlDatabaseUseCase04_password": {
+						"value": "[parameters('AzureSqlDatabaseUseCase04_password')]"
 					},
 					"AzureDataLakeStorageUseCase01_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageUseCase01_properties_typeProperties_url')]"
@@ -110,10 +136,39 @@
 					},
 					"AzureSqlDatabaseUseCase03_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabaseUseCase03_properties_typeProperties_userName')]"
+					},
+					"AzureSqlDatabaseUseCase04_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabaseUseCase04_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabaseUseCase04_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabaseUseCase04_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabaseUseCase04_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabaseUseCase04_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adfstorage59_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adfstorage59_ArmTemplate_0')]"
+			]
 		}
 	]
 }
